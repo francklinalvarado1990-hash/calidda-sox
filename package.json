@@ -1,0 +1,33 @@
+{
+  "name": "calidda-sox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repositorio de Controles SOX - Calidda y Calidda Energia",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:api dev:web",
+    "dev:api": "npm run dev -w @calidda-sox/api",
+    "dev:web": "npm run dev -w @calidda-sox/web",
+    "build": "npm run build -w @calidda-sox/api && npm run build -w @calidda-sox/web",
+    "typecheck": "npm run typecheck -w @calidda-sox/api && npm run typecheck -w @calidda-sox/web",
+    "test": "npm run test -w @calidda-sox/api",
+    "lint": "eslint apps/*/src --ext .ts,.tsx",
+    "db:migrate": "npm run db:migrate -w @calidda-sox/api",
+    "db:seed": "npm run db:seed -w @calidda-sox/api",
+    "db:studio": "npm run db:studio -w @calidda-sox/api"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^8.57.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

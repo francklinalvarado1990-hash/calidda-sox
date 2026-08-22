@@ -1,0 +1,49 @@
+# Despliegue completo con Docker. Para desarrollo local basta `docker compose up db`.
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: sox-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sox}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sox}
+      POSTGRES_DB: ${POSTGRES_DB:-calidda_sox}
+      TZ: America/Lima
+    ports: ['5432:5432']
+    volumes:
+      - datos-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-sox} -d ${POSTGRES_DB:-calidda_sox}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.api
+    container_name: sox-api
+    restart: unless-stopped
+    depends_on:
+      db: { condition: service_healthy }
+    env_file: [.env]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sox}:${POSTGRES_PASSWORD:-sox}@db:5432/${POSTGRES_DB:-calidda_sox}?schema=public
+      TZ: America/Lima
+    ports: ['3001:3001']
+    volumes:
+      # Evidencias fuera del contenedor: sobreviven a cada despliegue.
+      - evidencias:/app/storage
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.web
+    container_name: sox-web
+    restart: unless-stopped
+    depends_on: [api]
+    ports: ['8080:80']
+
+volumes:
+  datos-db:
+  evidencias:

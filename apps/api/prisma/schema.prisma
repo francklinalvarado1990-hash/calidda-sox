@@ -1,0 +1,569 @@
+// =============================================================================
+// Repositorio de Controles SOX - Calidda / Calidda Energia
+// Modelo de datos. Principios: trazabilidad total (nada se borra fisicamente),
+// segregacion de funciones y retencion de evidencia.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------- Organizacion --------------------------------
+
+/// Entidad legal sujeta a SOX. En el alcance: Calidda y Calidda Energia.
+model Empresa {
+  id          String   @id @default(cuid())
+  codigo      String   @unique // CALIDDA | CALIDDA_ENERGIA
+  nombre      String
+  ruc         String?
+  activo      Boolean  @default(true)
+  creadoEn    DateTime @default(now())
+
+  procesos    Proceso[]
+  controles   Control[]
+  periodos    Periodo[]
+  usuarios    UsuarioEmpresa[]
+
+  @@map("empresas")
+}
+
+/// Macroproceso / ciclo de negocio (ej. Ingresos, Compras a Pago, Cierre Contable).
+model Proceso {
+  id          String   @id @default(cuid())
+  empresaId   String
+  codigo      String
+  nombre      String
+  descripcion String?
+  responsable String?
+  activo      Boolean  @default(true)
+
+  empresa     Empresa  @relation(fields: [empresaId], references: [id])
+  subprocesos SubProceso[]
+  controles   Control[]
+
+  @@unique([empresaId, codigo])
+  @@map("procesos")
+}
+
+model SubProceso {
+  id         String   @id @default(cuid())
+  procesoId  String
+  codigo     String
+  nombre     String
+  activo     Boolean  @default(true)
+
+  proceso    Proceso  @relation(fields: [procesoId], references: [id])
+  controles  Control[]
+
+  @@unique([procesoId, codigo])
+  @@map("subprocesos")
+}
+
+// --------------------------------- Usuarios ----------------------------------
+
+enum Rol {
+  ADMIN         // Administracion tecnica de la plataforma
+  SOX_MANAGER   // Lider SOX / PMO: abre y cierra periodos, gobierna la matriz
+  CONTROL_OWNER // Dueno del control: aprobacion final
+  REVISOR       // Revisa la ejecucion cargada por el preparador
+  PREPARADOR    // Ejecuta el control y carga evidencia
+  AUDITOR       // Solo lectura (auditoria interna / externa)
+}
+
+enum ProveedorAuth {
+  LOCAL
+  ENTRA_ID
+  SAML
+}
+
+model Usuario {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  nombres        String
+  apellidos      String
+  cargo          String?
+  rol            Rol       @default(PREPARADOR)
+  activo         Boolean   @default(true)
+
+  // Autenticacion local (scrypt). Nulo cuando el usuario es federado por SSO.
+  passwordHash   String?
+  passwordSetAt  DateTime?
+  debeCambiarPwd Boolean   @default(false)
+  intentosFallidos Int     @default(0)
+  bloqueadoHasta DateTime?
+
+  // Capa SSO: preparada para Entra ID / SAML sin migrar datos.
+  proveedorAuth  ProveedorAuth @default(LOCAL)
+  subjectExterno String?       @unique
+
+  // MFA (TOTP) opcional pero recomendado para SOX_MANAGER/ADMIN.
+  mfaSecret      String?
+  mfaHabilitado  Boolean   @default(false)
+
+  ultimoLogin    DateTime?
+  creadoEn       DateTime  @default(now())
+  actualizadoEn  DateTime  @updatedAt
+
+  empresas             UsuarioEmpresa[]
+  controlesComoOwner   Control[]  @relation("ControlOwner")
+  controlesComoPrep    Control[]  @relation("ControlPreparador")
+  controlesComoRev     Control[]  @relation("ControlRevisor")
+  ejecucionesAsignadas Ejecucion[] @relation("EjecucionAsignado")
+  aprobaciones         Aprobacion[]
+  evidencias           Evidencia[]
+  deficienciasResp     Deficiencia[] @relation("DeficienciaResponsable")
+  sesiones             Sesion[]
+  auditoria            AuditLog[]
+
+  @@index([rol, activo])
+  @@map("usuarios")
+}
+
+/// Un usuario puede tener alcance sobre una o ambas empresas.
+model UsuarioEmpresa {
+  usuarioId String
+  empresaId String
+
+  usuario   Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  empresa   Empresa @relation(fields: [empresaId], references: [id])
+
+  @@id([usuarioId, empresaId])
+  @@map("usuario_empresa")
+}
+
+/// Refresh tokens con rotacion; permite revocar sesiones desde administracion.
+model Sesion {
+  id           String   @id @default(cuid())
+  usuarioId    String
+  tokenHash    String   @unique
+  ip           String?
+  userAgent    String?
+  expiraEn     DateTime
+  revocadaEn   DateTime?
+  creadoEn     DateTime @default(now())
+
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId])
+  @@map("sesiones")
+}
+
+// ------------------------------ Matriz de control ----------------------------
+
+enum Frecuencia {
+  DIARIA
+  SEMANAL
+  QUINCENAL
+  MENSUAL
+  BIMESTRAL
+  TRIMESTRAL
+  CUATRIMESTRAL
+  SEMESTRAL
+  ANUAL
+  EVENTUAL // Se instancia manualmente ante el evento
+}
+
+enum TipoControl {
+  PREVENTIVO
+  DETECTIVO
+}
+
+enum NaturalezaControl {
+  MANUAL
+  AUTOMATICO
+  HIBRIDO
+  ITGC
+  IPE // Information Produced by the Entity
+}
+
+/// Definicion maestra del control (la "matriz de riesgos y controles").
+/// Los cambios se versionan en ControlVersion: la matriz es evidencia de auditoria.
+model Control {
+  id             String   @id @default(cuid())
+  empresaId      String
+  procesoId      String
+  subprocesoId   String?
+
+  codigo         String   // Ej. CAL-P2P-003
+  nombre         String
+  descripcion    String   @db.Text
+  objetivo       String?  @db.Text
+  riesgo         String?  @db.Text
+
+  tipo           TipoControl
+  naturaleza     NaturalezaControl
+  frecuencia     Frecuencia
+  /// Mes ancla 1-12 para frecuencias multi-mensuales (trimestral, anual, etc.).
+  mesAncla       Int      @default(1)
+  esClave        Boolean  @default(false)
+  /// Aserciones de estados financieros cubiertas (E, C, V, P, D).
+  aserciones     String[] @default([])
+  cuentasContables String[] @default([])
+  sistemas       String[] @default([])
+
+  /// Dias habiles despues del cierre del periodo para ejecutar el control.
+  diasHabilesPlazo Int    @default(5)
+  /// Pasos de aprobacion requeridos. Ver WorkflowPaso.
+  requiereRevision Boolean @default(true)
+  requiereAprobacionOwner Boolean @default(true)
+
+  ownerId        String?
+  preparadorId   String?
+  revisorId      String?
+
+  evidenciaRequerida String? @db.Text
+  procedimiento  String?  @db.Text
+
+  activo         Boolean  @default(true)
+  version        Int      @default(1)
+  vigenteDesde   DateTime @default(now())
+  vigenteHasta   DateTime?
+
+  creadoEn       DateTime @default(now())
+  actualizadoEn  DateTime @updatedAt
+
+  empresa        Empresa    @relation(fields: [empresaId], references: [id])
+  proceso        Proceso    @relation(fields: [procesoId], references: [id])
+  subproceso     SubProceso? @relation(fields: [subprocesoId], references: [id])
+  owner          Usuario?   @relation("ControlOwner", fields: [ownerId], references: [id])
+  preparador     Usuario?   @relation("ControlPreparador", fields: [preparadorId], references: [id])
+  revisor        Usuario?   @relation("ControlRevisor", fields: [revisorId], references: [id])
+
+  versiones      ControlVersion[]
+  ejecuciones    Ejecucion[]
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId, activo])
+  @@map("controles")
+}
+
+/// Snapshot inmutable del control en cada cambio (quien, cuando, que cambio).
+model ControlVersion {
+  id          String   @id @default(cuid())
+  controlId   String
+  version     Int
+  snapshot    Json
+  cambios     Json?
+  motivo      String?
+  creadoPorId String?
+  creadoEn    DateTime @default(now())
+
+  control     Control  @relation(fields: [controlId], references: [id], onDelete: Cascade)
+
+  @@unique([controlId, version])
+  @@map("control_versiones")
+}
+
+// ------------------------------ Ciclo mensual --------------------------------
+
+enum EstadoPeriodo {
+  PLANIFICADO
+  ABIERTO
+  EN_CIERRE
+  CERRADO
+  CERRADO_CON_PENDIENTES
+}
+
+/// Un periodo = un mes de un ejercicio para una empresa.
+model Periodo {
+  id             String        @id @default(cuid())
+  empresaId      String
+  anio           Int
+  mes            Int           // 1-12
+  estado         EstadoPeriodo @default(PLANIFICADO)
+
+  fechaApertura  DateTime?
+  fechaLimiteCierre DateTime?
+  fechaCierre    DateTime?
+
+  abiertoPorId   String?
+  cerradoPorId   String?
+  /// Justificacion obligatoria cuando se cierra dejando controles pendientes.
+  notaCierre     String?       @db.Text
+  /// Snapshot de metricas al momento del cierre (evidencia del estado real).
+  resumenCierre  Json?
+
+  creadoEn       DateTime      @default(now())
+  actualizadoEn  DateTime      @updatedAt
+
+  empresa        Empresa       @relation(fields: [empresaId], references: [id])
+  ejecuciones    Ejecucion[]
+
+  @@unique([empresaId, anio, mes])
+  @@index([estado])
+  @@map("periodos")
+}
+
+enum EstadoEjecucion {
+  PENDIENTE     // Creada, sin iniciar
+  EN_EJECUCION  // Preparador trabajando
+  EN_REVISION   // Enviada al revisor
+  OBSERVADO     // Rechazada, regresa al preparador
+  APROBADO      // Revisor conforme, pendiente de owner
+  CERRADO       // Completada y aprobada en todos los pasos
+  NO_APLICA     // Justificada como no aplicable
+  VENCIDO       // Marca aplicada al cerrar el periodo con el control abierto
+}
+
+enum ResultadoControl {
+  EFECTIVO
+  EFECTIVO_CON_OBSERVACIONES
+  DEFICIENTE
+  NO_APLICA
+}
+
+/// Instancia de un control dentro de un periodo. Es la unidad de trabajo diaria.
+model Ejecucion {
+  id             String   @id @default(cuid())
+  periodoId      String
+  controlId      String
+
+  /// Snapshot del control al instanciar: el periodo no cambia si la matriz cambia.
+  controlVersion Int      @default(1)
+  codigoControl  String
+  nombreControl  String
+
+  estado         EstadoEjecucion  @default(PENDIENTE)
+  resultado      ResultadoControl?
+  conclusion     String?  @db.Text
+  muestraTamano  Int?
+  excepciones    Int?     @default(0)
+
+  asignadoAId    String?
+  revisorId      String?
+  ownerId        String?
+
+  fechaLimite    DateTime
+  fechaInicio    DateTime?
+  fechaEnvioRevision DateTime?
+  fechaCierre    DateTime?
+
+  /// Marca persistente para controles que quedaron abiertos al cerrar el periodo.
+  marcadoPendiente     Boolean  @default(false)
+  motivoPendiente      String?  @db.Text
+  diasAtrasoAlCierre   Int?
+  /// Periodo en el que se regulariza un control marcado como pendiente.
+  regularizadoEnPeriodoId String?
+
+  creadoEn       DateTime @default(now())
+  actualizadoEn  DateTime @updatedAt
+
+  periodo        Periodo  @relation(fields: [periodoId], references: [id], onDelete: Cascade)
+  control        Control  @relation(fields: [controlId], references: [id])
+  asignadoA      Usuario? @relation("EjecucionAsignado", fields: [asignadoAId], references: [id])
+
+  aprobaciones   Aprobacion[]
+  evidencias     Evidencia[]
+  deficiencias   Deficiencia[]
+  recordatorios  Recordatorio[]
+
+  @@unique([periodoId, controlId])
+  @@index([estado, fechaLimite])
+  @@index([asignadoAId, estado])
+  @@map("ejecuciones")
+}
+
+// ------------------------- Workflow de aprobacion ----------------------------
+
+enum PasoWorkflow {
+  PREPARACION
+  REVISION
+  APROBACION_OWNER
+}
+
+enum AccionAprobacion {
+  ENVIAR
+  APROBAR
+  RECHAZAR
+  REASIGNAR
+  REABRIR
+  MARCAR_NO_APLICA
+}
+
+/// Bitacora inmutable del workflow. Cada transicion deja rastro con comentario.
+model Aprobacion {
+  id           String   @id @default(cuid())
+  ejecucionId  String
+  paso         PasoWorkflow
+  accion       AccionAprobacion
+  usuarioId    String
+  comentario   String?  @db.Text
+  estadoAnterior EstadoEjecucion
+  estadoNuevo    EstadoEjecucion
+  creadoEn     DateTime @default(now())
+
+  ejecucion    Ejecucion @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
+
+  @@index([ejecucionId, creadoEn])
+  @@map("aprobaciones")
+}
+
+// --------------------------- Archivamiento documental ------------------------
+
+/// Evidencia del control. Inmutable: nunca se sobrescribe, se versiona.
+/// El hash SHA-256 permite demostrar integridad ante el auditor externo.
+model Evidencia {
+  id             String   @id @default(cuid())
+  ejecucionId    String
+  nombreArchivo  String
+  descripcion    String?
+  mimeType       String
+  tamanoBytes    Int
+  sha256         String
+  storageKey     String   @unique
+  version        Int      @default(1)
+
+  subidoPorId    String
+  subidoEn       DateTime @default(now())
+
+  /// Baja logica: la evidencia SOX no se elimina fisicamente.
+  anuladaEn      DateTime?
+  anuladaPorId   String?
+  motivoAnulacion String?
+
+  /// Retencion legal (por defecto 7 anios desde la carga).
+  retenerHasta   DateTime
+
+  ejecucion      Ejecucion @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  subidoPor      Usuario   @relation(fields: [subidoPorId], references: [id])
+
+  @@index([ejecucionId])
+  @@index([sha256])
+  @@map("evidencias")
+}
+
+// ------------------------------- Deficiencias --------------------------------
+
+enum SeveridadDeficiencia {
+  OBSERVACION
+  DEFICIENCIA
+  DEFICIENCIA_SIGNIFICATIVA
+  DEBILIDAD_MATERIAL
+}
+
+enum EstadoDeficiencia {
+  ABIERTA
+  EN_REMEDIACION
+  EN_VALIDACION
+  CERRADA
+  ACEPTADA
+}
+
+model Deficiencia {
+  id             String   @id @default(cuid())
+  ejecucionId    String
+  codigo         String   @unique
+  severidad      SeveridadDeficiencia
+  estado         EstadoDeficiencia @default(ABIERTA)
+  descripcion    String   @db.Text
+  causaRaiz      String?  @db.Text
+  impacto        String?  @db.Text
+  planAccion     String?  @db.Text
+  responsableId  String?
+  fechaCompromiso DateTime?
+  fechaCierre    DateTime?
+  evidenciaCierre String? @db.Text
+
+  creadoEn       DateTime @default(now())
+  actualizadoEn  DateTime @updatedAt
+
+  ejecucion      Ejecucion @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+  responsable    Usuario?  @relation("DeficienciaResponsable", fields: [responsableId], references: [id])
+
+  @@index([estado, severidad])
+  @@map("deficiencias")
+}
+
+// ------------------------- Notificaciones y calendario -----------------------
+
+enum TipoRecordatorio {
+  APERTURA_PERIODO
+  PROXIMO_VENCIMIENTO
+  VENCIMIENTO_HOY
+  VENCIDO
+  ESCALAMIENTO
+  PENDIENTE_REVISION
+  OBSERVADO
+  RESUMEN_CIERRE
+  DIGEST_SEMANAL
+}
+
+enum EstadoEnvio {
+  PENDIENTE
+  ENVIADO
+  ERROR
+}
+
+/// Log de correos. Sirve como evidencia de la comunicacion a los responsables
+/// y como idempotencia: no se reenvia el mismo recordatorio dos veces.
+model Recordatorio {
+  id            String   @id @default(cuid())
+  tipo          TipoRecordatorio
+  ejecucionId   String?
+  periodoId     String?
+  destinatario  String
+  asunto        String
+  cuerpo        String   @db.Text
+  estado        EstadoEnvio @default(PENDIENTE)
+  error         String?
+  /// Clave de deduplicacion: tipo + entidad + dia.
+  claveDedup    String   @unique
+  enviadoEn     DateTime?
+  creadoEn      DateTime @default(now())
+
+  ejecucion     Ejecucion? @relation(fields: [ejecucionId], references: [id], onDelete: Cascade)
+
+  @@index([estado, creadoEn])
+  @@map("recordatorios")
+}
+
+/// Feriados para el calculo de dias habiles (Peru + dias no laborables locales).
+model Feriado {
+  id        String   @id @default(cuid())
+  fecha     DateTime @unique @db.Date
+  nombre    String
+  creadoEn  DateTime @default(now())
+
+  @@map("feriados")
+}
+
+/// Configuracion operativa editable sin desplegar (dias de recordatorio, etc.).
+model Configuracion {
+  clave        String   @id
+  valor        Json
+  descripcion  String?
+  actualizadoEn DateTime @updatedAt
+
+  @@map("configuracion")
+}
+
+// --------------------------------- Auditoria ---------------------------------
+
+/// Pista de auditoria de toda accion sensible. Requisito SOX 404 / ITGC.
+/// Append-only: no existe endpoint de update ni delete.
+model AuditLog {
+  id          String   @id @default(cuid())
+  usuarioId   String?
+  actorEmail  String?
+  accion      String   // login, control.update, ejecucion.aprobar, ...
+  entidad     String
+  entidadId   String?
+  antes       Json?
+  despues     Json?
+  ip          String?
+  userAgent   String?
+  creadoEn    DateTime @default(now())
+
+  usuario     Usuario? @relation(fields: [usuarioId], references: [id])
+
+  @@index([entidad, entidadId])
+  @@index([creadoEn])
+  @@index([usuarioId, creadoEn])
+  @@map("audit_log")
+}
