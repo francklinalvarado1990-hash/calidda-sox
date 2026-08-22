@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+storage/
+*.log
+.DS_Store
+coverage/
+.vite/
+apps/web/dist/
+apps/api/dist/
+*.tsbuildinfo
