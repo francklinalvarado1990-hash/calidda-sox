@@ -1,0 +1,663 @@
+<title>Resultados GNLC agosto 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f2f4f7; --surface:#ffffff; --surface-2:#f7f8fa; --ink:#141a22; --ink-2:#525c6b; --muted:#7f8895;
+  --hair:#e3e7ec; --hair-2:#cfd5dc; --accent:#2a78d6; --accent-ink:#1c5cab; --accent-wash:rgba(42,120,214,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --de:#b9c0c9;
+  --good:#0ca30c; --good-ink:#006300; --warn:#fab219; --warn-ink:#7a5200; --serious:#ec835a; --serious-ink:#8a3a16; --crit:#d03b3b; --crit-ink:#a02323;
+  --shadow:0 1px 2px rgba(20,26,34,.05),0 4px 14px rgba(20,26,34,.05);
+  --font-ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-head:"Manrope","IBM Plex Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#0f1216; --surface:#171b21; --surface-2:#1d2229; --ink:#f3f5f8; --ink-2:#b6bec9; --muted:#8a93a1;
+    --hair:#262c35; --hair-2:#343c47; --accent:#3987e5; --accent-ink:#86b6ef; --accent-wash:rgba(57,135,229,.16);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --de:#4a535f;
+    --good-ink:#3ec53e; --warn-ink:#f0c04a; --serious-ink:#f2a07f; --crit-ink:#f07373;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#0f1216; --surface:#171b21; --surface-2:#1d2229; --ink:#f3f5f8; --ink-2:#b6bec9; --muted:#8a93a1;
+  --hair:#262c35; --hair-2:#343c47; --accent:#3987e5; --accent-ink:#86b6ef; --accent-wash:rgba(57,135,229,.16);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --de:#4a535f;
+  --good-ink:#3ec53e; --warn-ink:#f0c04a; --serious-ink:#f2a07f; --crit-ink:#f07373;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font-ui);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink)}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--font-head);text-wrap:balance;margin:0}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:20px;padding-block:0 48px}
+@media (max-width:640px){.wrap{padding-inline:16px}}
+
+/* ---- cabecera ---- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--page);border-bottom:1px solid var(--hair);margin-inline:-20px;padding-inline:20px;padding-block:14px 12px}
+@media (max-width:640px){.top{margin-inline:-16px;padding-inline:16px}}
+.top-row{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-size:22px;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.sub{color:var(--ink-2);font-size:13px;margin-top:2px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--hair-2);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:6px 11px;cursor:pointer;color:var(--ink-2);font-weight:500;font-size:13px;min-height:34px}
+.seg button + button{border-left:1px solid var(--hair)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.flabel{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* ---- secciones ---- */
+section{margin-top:28px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
+h2{font-size:17px;font-weight:700}
+.sec-head p{margin:0;color:var(--ink-2);font-size:13px}
+
+/* ---- KPI ---- */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile.hero{grid-column:span 2;background:linear-gradient(135deg,var(--surface),var(--accent-wash))}
+.tile .lab{font-size:12px;color:var(--ink-2);font-weight:500}
+.tile .val{font-family:var(--font-head);font-weight:700;font-size:26px;letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+.tile.hero .val{font-size:44px}
+.tile .delta{font-size:12px;color:var(--ink-2);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tile .delta b{font-weight:600}
+.up{color:var(--good-ink)}.down{color:var(--crit-ink)}
+.tile svg{width:100%;height:36px;display:block;margin-top:auto}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.tile.hero{grid-column:span 3}}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.tile.hero{grid-column:span 2}.tile .val{font-size:22px}.tile.hero .val{font-size:36px}}
+
+/* ---- chips ---- */
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:600;letter-spacing:.01em;border:1px solid transparent;white-space:nowrap}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.chip.crit{color:var(--crit-ink);background:rgba(208,59,59,.10);border-color:rgba(208,59,59,.25)}
+.chip.warn{color:var(--warn-ink);background:rgba(250,178,25,.14);border-color:rgba(250,178,25,.35)}
+.chip.good{color:var(--good-ink);background:rgba(12,163,12,.10);border-color:rgba(12,163,12,.25)}
+.chip.info{color:var(--accent-ink);background:var(--accent-wash);border-color:rgba(42,120,214,.25)}
+
+/* ---- tarjetas ---- */
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:16px 18px;min-width:0}
+.card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:8px}
+.card h3{font-size:14.5px;font-weight:700}
+.card .desc{font-size:12.5px;color:var(--ink-2);margin:2px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 4px;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.legend i.line{height:3px;border-radius:2px;width:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.grid2,.grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.chart{width:100%;min-height:200px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font-family:var(--font-ui);fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+.chart .grid line{stroke:var(--hair);stroke-width:1}
+.chart .axis line{stroke:var(--hair-2);stroke-width:1}
+.chart .lbl{fill:var(--ink-2);font-size:11px;font-weight:500}
+.chart .lbl-strong{fill:var(--ink);font-weight:600}
+.chart .hit{fill:transparent;cursor:default}
+.tbl-view{overflow-x:auto}
+.tbl-view table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+.tbl-view th,.tbl-view td{padding:5px 8px;border-bottom:1px solid var(--hair);text-align:right;white-space:nowrap}
+.tbl-view th:first-child,.tbl-view td:first-child{text-align:left}
+.tbl-view th{color:var(--muted);font-weight:600;font-size:11.5px}
+.note{font-size:12px;color:var(--ink-2);margin:10px 0 0;line-height:1.45}
+
+/* ---- tabla EERR ---- */
+.eerr-wrap{overflow-x:auto}
+table.eerr{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}
+.eerr th,.eerr td{padding:7px 10px;border-bottom:1px solid var(--hair);text-align:right;white-space:nowrap}
+.eerr th{color:var(--muted);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0;background:var(--surface)}
+.eerr th:first-child,.eerr td:first-child{text-align:left;white-space:normal;min-width:240px}
+.eerr td.pct{color:var(--muted);font-size:12px}
+.eerr tr.n0 td{font-weight:600}
+.eerr tr.total td{font-weight:700;border-top:2px solid var(--hair-2);background:var(--surface-2)}
+.eerr tr.margen td{font-weight:700;border-top:1px solid var(--hair-2)}
+.eerr tr.n1 td:first-child{padding-left:26px}
+.eerr tr.n2 td:first-child{padding-left:42px}
+.eerr tr.n3 td{color:var(--ink-2);font-size:12px}
+.eerr tr.n3 td:first-child{padding-left:58px}
+.eerr .tog{border:0;background:transparent;cursor:pointer;padding:0 6px 0 0;color:var(--muted);width:20px;display:inline-block;text-align:left}
+.eerr .tog::before{content:"▸";display:inline-block;transition:transform .15s}
+.eerr .tog[aria-expanded="true"]::before{transform:rotate(90deg)}
+.eerr .neg{color:var(--ink)}
+.eerr .var.up{color:var(--good-ink)}.eerr .var.down{color:var(--crit-ink)}
+.eerr td .nota{display:block;font-size:11.5px;color:var(--muted);font-weight:400;white-space:normal;max-width:520px}
+@media (prefers-reduced-motion: reduce){.eerr .tog::before{transition:none}}
+
+/* ---- hallazgos ---- */
+.findings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.findings{grid-template-columns:1fr}}
+.finding{display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--hair-2)}
+.finding.crit{border-left-color:var(--crit)}.finding.warn{border-left-color:var(--warn)}.finding.good{border-left-color:var(--good)}.finding.info{border-left-color:var(--accent)}
+.finding .fh{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.finding h3{font-size:14.5px}
+.finding .ev{font-size:13px;color:var(--ink-2)}
+.finding .ev b{color:var(--ink);font-weight:600}
+.finding .niif{font-size:12px;color:var(--muted)}
+.finding ul{margin:0;padding-left:18px;font-size:13px}
+.finding li{margin:3px 0}
+.finding .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:auto;padding-top:4px;border-top:1px solid var(--hair)}
+.finding .meta b{color:var(--ink-2);font-weight:600}
+
+/* ---- notas ---- */
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.notes{grid-template-columns:1fr}}
+.notes ul{margin:6px 0 0;padding-left:18px;font-size:13px}
+.notes li{margin:5px 0}
+.notes li b{font-weight:600}
+
+/* ---- anexo ---- */
+.anexo-tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.anexo-tools input,.anexo-tools select{font:inherit;padding:6px 10px;border:1px solid var(--hair-2);border-radius:8px;background:var(--surface);color:var(--ink);min-height:34px}
+.anexo-tools input{flex:1 1 220px}
+.anexo-wrap{overflow-x:auto;max-height:520px;overflow-y:auto;border:1px solid var(--hair);border-radius:8px}
+table.anexo{border-collapse:collapse;width:100%;font-size:12px;font-variant-numeric:tabular-nums}
+.anexo th,.anexo td{padding:5px 8px;border-bottom:1px solid var(--hair);text-align:right;white-space:nowrap}
+.anexo th{position:sticky;top:0;background:var(--surface-2);color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;z-index:1}
+.anexo th:nth-child(-n+3),.anexo td:nth-child(-n+3){text-align:left}
+.anexo td:nth-child(2){white-space:normal;min-width:220px}
+.anexo tfoot td{color:var(--muted)}
+
+/* ---- tooltip ---- */
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--page);padding:8px 10px;border-radius:8px;font-size:12px;line-height:1.4;box-shadow:var(--shadow);max-width:340px;opacity:0;transition:opacity .08s}
+#tip[data-on="1"]{opacity:1}
+#tip b{font-weight:600}
+#tip table{border-collapse:collapse;margin-top:3px}
+#tip td{padding:1px 6px 1px 0;font-variant-numeric:tabular-nums;white-space:nowrap}
+#tip td:first-child{white-space:normal;max-width:220px}
+#tip td:last-child{text-align:right;padding-right:0}
+#tip i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.tog-view{display:inline-flex;border:1px solid var(--hair-2);border-radius:7px;overflow:hidden;flex:none}
+.tog-view button{border:0;background:transparent;padding:4px 9px;font-size:12px;cursor:pointer;color:var(--ink-2);min-height:28px}
+.tog-view button + button{border-left:1px solid var(--hair)}
+.tog-view button[aria-pressed="true"]{background:var(--surface-2);color:var(--ink);font-weight:600}
+.tog-view button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.foot{margin-top:36px;font-size:12px;color:var(--muted);border-top:1px solid var(--hair);padding-top:12px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.sr{position:absolute;left:-9999px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-row">
+      <div>
+        <div class="eyebrow">Gas Natural de Lima y Callao S.A. · Cálidda</div>
+        <h1>Resultados gerenciales a agosto 2026</h1>
+        <div class="sub">Estado de resultados mensualizado enero–agosto 2026, en soles. Fuente: saldos contables homologados a la estructura de EEFF (316 cuentas).</div>
+      </div>
+      <div class="filters" role="group" aria-label="Periodo">
+        <span class="flabel">Vista</span>
+        <div class="seg" id="segModo">
+          <button type="button" data-modo="mes" aria-pressed="false">Mes</button>
+          <button type="button" data-modo="ytd" aria-pressed="true">Acumulado</button>
+        </div>
+        <span class="flabel">Hasta</span>
+        <div class="seg" id="segMes"></div>
+      </div>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-kpi">
+    <div class="sec-head"><h2 id="h-kpi">Indicadores clave</h2><p id="kpiScope"></p></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section aria-labelledby="h-eerr">
+    <div class="sec-head">
+      <h2 id="h-eerr">Estado de resultados gerencial</h2>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <p>Miles de soles. Ingresos en positivo, costos y gastos en negativo; los subtotales son sumas. Haga clic en ▸ para abrir el detalle.</p>
+        <div class="tog-view" id="eerrView">
+          <button type="button" data-v="resumen" aria-pressed="true">Resumen</button>
+          <button type="button" data-v="meses" aria-pressed="false">Todos los meses</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:0 0 4px"><div class="eerr-wrap"><table class="eerr" id="eerr"></table></div></div>
+  </section>
+
+  <section aria-labelledby="h-charts">
+    <div class="sec-head"><h2 id="h-charts">Formación del resultado</h2><p>El puente y las barras por naturaleza siguen la vista seleccionada; las series mensuales muestran los ocho meses.</p></div>
+    <div class="grid2">
+      <div class="card" data-chart="puente"></div>
+      <div class="card" data-chart="ebitda"></div>
+      <div class="card" data-chart="ingresos"></div>
+      <div class="card" data-chart="margenes"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-opex">
+    <div class="sec-head"><h2 id="h-opex">Gastos operativos y provisiones</h2><p>Gastos de administración, comerciales y de operación y mantenimiento; provisión por pérdida crediticia esperada.</p></div>
+    <div class="grid2">
+      <div class="card" data-chart="opexfun"></div>
+      <div class="card" data-chart="opexnat"></div>
+      <div class="card" data-chart="incobrables"></div>
+      <div class="card" data-chart="opextop"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-bajo">
+    <div class="sec-head"><h2 id="h-bajo">Bajo el EBITDA</h2><p>Partidas que separan el EBITDA de la utilidad neta, por mes, en millones de soles.</p></div>
+    <div class="grid4">
+      <div class="card" data-chart="da"></div>
+      <div class="card" data-chart="fin"></div>
+      <div class="card" data-chart="fx"></div>
+      <div class="card" data-chart="imp"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-hallazgos">
+    <div class="sec-head"><h2 id="h-hallazgos">Lectura ejecutiva y plan de acción</h2><p>Hallazgos priorizados por impacto en resultado y riesgo, con la referencia NIIF aplicable y acciones propuestas.</p></div>
+    <div class="findings" id="findings"></div>
+  </section>
+
+  <section aria-labelledby="h-notas">
+    <div class="sec-head"><h2 id="h-notas">Notas NIIF y calidad de la información</h2></div>
+    <div class="notes" id="notas"></div>
+  </section>
+
+  <section aria-labelledby="h-anexo">
+    <div class="sec-head"><h2 id="h-anexo">Anexo · detalle por cuenta contable</h2><p>Importe gerencial en soles (ingresos +, gastos −). Se muestran las cuentas con movimiento en el año.</p></div>
+    <div class="card">
+      <div class="anexo-tools">
+        <input type="search" id="anexoQ" placeholder="Buscar cuenta o descripción" aria-label="Buscar cuenta">
+        <select id="anexoRubro" aria-label="Filtrar por rubro"></select>
+      </div>
+      <div class="anexo-wrap"><table class="anexo" id="anexo"></table></div>
+    </div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script id="datos" type="application/json">__DATOS__</script>
+<script>
+(function(){
+'use strict';
+const DATA = JSON.parse(document.getElementById('datos').textContent);
+const MESES = DATA.meta.meses, MC = DATA.meta.meses_cortos, N = MESES.length;
+const L = {}; (function idx(ls){ls.forEach(l=>{L[l.id]=l; if(l.hijos) idx(l.hijos);});})(DATA.lineas);
+const state = {modo:'ytd', mes:N-1};
+try{const s=JSON.parse(localStorage.getItem('gnlc-eeff-vista')||'null'); if(s&&s.modo&&Number.isInteger(s.mes)&&s.mes<N){state.modo=s.modo;state.mes=s.mes;}}catch(e){}
+
+/* ---------- formato ---------- */
+const nf0 = new Intl.NumberFormat('es-PE',{maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('es-PE',{minimumFractionDigits:1,maximumFractionDigits:1});
+const nf2 = new Intl.NumberFormat('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fM = v => (v<0?'−':'') + 'S/ ' + (Math.abs(v)>=1e5 ? nf1.format(Math.abs(v)/1e6)+' M' : nf0.format(Math.abs(v)/1e3)+' mil');
+const fMs = v => (v<0?'−':'') + nf1.format(Math.abs(v)/1e6);
+const fK = v => v===0?'–':(v<0?'−':'') + nf0.format(Math.abs(v)/1e3);
+const fS = v => (v<0?'−':'') + 'S/ ' + nf0.format(Math.abs(v));
+const fP = (v,d=1) => (v<0?'−':'') + new Intl.NumberFormat('es-PE',{minimumFractionDigits:d,maximumFractionDigits:d}).format(Math.abs(v)*100)+' %';
+const sum = a => a.reduce((x,y)=>x+y,0);
+const ytdTo = (vals,i) => sum(vals.slice(0,i+1));
+const val = l => state.modo==='mes' ? l.valores[state.mes] : ytdTo(l.valores,state.mes);
+const scopeLabel = () => state.modo==='mes' ? `${MESES[state.mes]} 2026` : `Acumulado enero–${MESES[state.mes].toLowerCase()} 2026`;
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SER = ['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById('tip');
+function showTip(html,ev){tip.innerHTML=html;tip.dataset.on='1';moveTip(ev);}
+function moveTip(ev){const w=tip.offsetWidth,h=tip.offsetHeight;let x=ev.clientX+14,y=ev.clientY+14;if(x+w>innerWidth-8)x=ev.clientX-w-14;if(y+h>innerHeight-8)y=ev.clientY-h-14;tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.dataset.on='0';}
+
+/* ---------- filtros ---------- */
+const segMes=document.getElementById('segMes');
+MESES.forEach((m,i)=>{const b=document.createElement('button');b.type='button';b.dataset.mes=i;b.textContent=MC[i];b.setAttribute('aria-label',m);segMes.appendChild(b);});
+function syncFilters(){
+  document.querySelectorAll('#segModo button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.modo===state.modo)));
+  segMes.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.mes===state.mes)));
+  try{localStorage.setItem('gnlc-eeff-vista',JSON.stringify(state));}catch(e){}
+}
+document.getElementById('segModo').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.modo=b.dataset.modo;renderScoped();});
+segMes.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;state.mes=+b.dataset.mes;renderScoped();});
+
+/* ---------- KPIs ---------- */
+function spark(vals,idx,color){
+  const w=200,h=36,p=3,min=Math.min(0,...vals),max=Math.max(...vals),r=(max-min)||1;
+  const x=i=>p+i*(w-2*p)/(N-1),y=v=>h-p-(v-min)/r*(h-2*p);
+  const d=vals.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+  const area=d+` L${x(N-1).toFixed(1)} ${y(min).toFixed(1)} L${x(0).toFixed(1)} ${y(min).toFixed(1)} Z`;
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><path d="${area}" style="fill:${color};opacity:.10"/><path d="${d}" style="fill:none;stroke:${color};stroke-width:2;stroke-linejoin:round;stroke-linecap:round" vector-effect="non-scaling-stroke"/><circle cx="${x(idx).toFixed(1)}" cy="${y(vals[idx]).toFixed(1)} " r="4" style="fill:${color};stroke:var(--surface);stroke-width:2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function delta(l,invert){
+  const cur=l.valores[state.mes], prev=state.mes>0?l.valores[state.mes-1]:null;
+  if(prev===null||prev===0) return '';
+  const d=cur-prev, p=d/Math.abs(prev), good = invert ? d<0 : d>0;
+  return `<span class="${good?'up':'down'}"><b>${d>0?'+':'−'}${fMs(Math.abs(d))} M</b> (${fP(p)})</span> <span>vs ${MC[state.mes-1].toLowerCase()}</span>`;
+}
+function renderKpis(){
+  const ing=L.i_netos, mb=L.mb, eb=L.ebitda, un=L.un, inc=L.g_inc, dist=L.i_dist;
+  const vIng=val(ing), vMb=val(mb), vEb=val(eb), vUn=val(un), vInc=val(inc), vDist=val(dist);
+  const ratioInc = -vInc/vDist;
+  const incStatus = ratioInc>0.04?['crit','Crítico']:ratioInc>0.025?['warn','Atención']:['good','Controlado'];
+  const ytdNote = state.modo==='ytd' ? `<span>promedio mensual <b>${fMs(vUn/(state.mes+1))} M</b></span>` : delta(un);
+  document.getElementById('kpiScope').textContent = scopeLabel();
+  document.getElementById('kpis').innerHTML = `
+  <div class="tile hero"><div class="lab">Utilidad neta · ${esc(scopeLabel())}</div><div class="val">${fM(vUn)}</div>
+    <div class="delta">${ytdNote}<span>margen neto <b>${fP(vUn/vIng)}</b> sobre ingresos por distribución y servicios</span></div>${spark(un.valores,state.mes,'var(--s1)')}</div>
+  <div class="tile"><div class="lab">Ingresos por distribución y servicios</div><div class="val">${fM(vIng)}</div>
+    <div class="delta">${state.modo==='mes'?delta(ing):`<span>excluye pass-through de gas y transporte <b>${fM(val(L.i_gas))}</b></span>`}</div>${spark(ing.valores,state.mes,'var(--s1)')}</div>
+  <div class="tile"><div class="lab">Margen bruto</div><div class="val">${fM(vMb)}</div>
+    <div class="delta"><span><b>${fP(vMb/vIng)}</b> de los ingresos</span>${state.modo==='mes'?delta(mb):''}</div>${spark(mb.valores,state.mes,'var(--s1)')}</div>
+  <div class="tile"><div class="lab">EBITDA</div><div class="val">${fM(vEb)}</div>
+    <div class="delta"><span>margen <b>${fP(vEb/vIng)}</b></span>${state.modo==='mes'?delta(eb):''}</div>${spark(eb.valores,state.mes,'var(--s1)')}</div>
+  <div class="tile"><div class="lab">Provisión por incobrables</div><div class="val">${fM(-vInc)}</div>
+    <div class="delta"><span class="chip ${incStatus[0]}">${incStatus[1]}</span><span><b>${fP(ratioInc)}</b> del ingreso por distribución</span></div>${spark(inc.valores.map(v=>-v),state.mes,'var(--s1)')}</div>`;
+}
+
+/* ---------- tabla EERR ---------- */
+let eerrView='resumen'; const open=new Set(['i_netos','g_op']);
+document.getElementById('eerrView').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;eerrView=b.dataset.v;document.querySelectorAll('#eerrView button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderEerr();});
+function renderEerr(){
+  const base=L.i_netos, rows=[];
+  const walk=(l,nivel,parentOpen)=>{
+    if(!parentOpen) return;
+    const kids=(l.hijos||[]);
+    rows.push({l,nivel,has:kids.length>0});
+    if(kids.length&&open.has(l.id)) kids.forEach(k=>walk(k,Math.max(nivel+1,k.nivel),true));
+  };
+  DATA.lineas.forEach(l=>walk(l,l.nivel,true));
+  const m=state.mes, mesTxt=MC[m], prev=m>0?MC[m-1]:null;
+  let head, body='';
+  if(eerrView==='resumen'){
+    head=`<tr><th>Concepto</th><th>${mesTxt} 2026</th><th>% ing.</th><th>Var. vs ${prev||'–'}</th><th>Acum. a ${mesTxt.toLowerCase()}</th><th>% ing.</th></tr>`;
+    rows.forEach(({l,nivel,has})=>{
+      const vm=l.valores[m], vy=ytdTo(l.valores,m), vp=prev!==null?l.valores[m-1]:null, d=vp===null?null:vm-vp;
+      const bm=base.valores[m], by=ytdTo(base.valores,m);
+      const isRes=['subtotal','margen','total'].includes(l.tipo);
+      const cls=`n${nivel} ${l.tipo}`;
+      const varCell = d===null||l.tipo==='cuenta' ? '' : `<span class="var ${d>=0?'up':'down'}">${d>=0?'+':'−'}${fK(Math.abs(d))}</span>`;
+      body+=`<tr class="${cls}"><td>${has?`<button class="tog" type="button" aria-expanded="${open.has(l.id)}" data-id="${l.id}" aria-label="Abrir ${esc(l.nombre)}"></button>`:'<span class="tog" style="visibility:hidden"></span>'}${esc(l.nombre)}${l.nota&&open.has(l.id)?`<span class="nota">${esc(l.nota)}</span>`:''}</td><td>${fK(vm)}</td><td class="pct">${isRes||l.nivel<=1&&l.tipo!=='cuenta'?fP(vm/bm):''}</td><td>${varCell}</td><td>${fK(vy)}</td><td class="pct">${isRes||l.nivel<=1&&l.tipo!=='cuenta'?fP(vy/by):''}</td></tr>`;
+    });
+  } else {
+    head=`<tr><th>Concepto</th>${MC.map(x=>`<th>${x}</th>`).join('')}<th>Acumulado</th></tr>`;
+    rows.forEach(({l,nivel,has})=>{
+      body+=`<tr class="n${nivel} ${l.tipo}"><td>${has?`<button class="tog" type="button" aria-expanded="${open.has(l.id)}" data-id="${l.id}" aria-label="Abrir ${esc(l.nombre)}"></button>`:'<span class="tog" style="visibility:hidden"></span>'}${esc(l.nombre)}</td>${l.valores.map(v=>`<td>${fK(v)}</td>`).join('')}<td>${fK(l.ytd)}</td></tr>`;
+    });
+  }
+  document.getElementById('eerr').innerHTML=`<thead>${head}</thead><tbody>${body}</tbody>`;
+}
+document.getElementById('eerr').addEventListener('click',e=>{const b=e.target.closest('.tog[data-id]');if(!b)return;const id=b.dataset.id;open.has(id)?open.delete(id):open.add(id);renderEerr();});
+
+/* ---------- motor de gráficos SVG ---------- */
+const charts={};
+function card(el,title,desc,legend){
+  el.innerHTML=`<div class="card-head"><div><h3>${title}</h3><p class="desc">${desc}</p></div><div class="tog-view"><button type="button" data-v="g" aria-pressed="true">Gráfico</button><button type="button" data-v="t" aria-pressed="false">Tabla</button></div></div>${legend?`<div class="legend">${legend.map(([n,c,line])=>`<span><i class="${line?'line':''}" style="background:${c}"></i>${esc(n)}</span>`).join('')}</div>`:''}<div class="chart"></div><div class="tbl-view" hidden></div>`;
+  el.querySelector('.tog-view').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const t=b.dataset.v==='t';el.querySelector('.chart').hidden=t;el.querySelector('.tbl-view').hidden=!t;el.querySelectorAll('.tog-view button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+  return {chart:el.querySelector('.chart'),table:el.querySelector('.tbl-view')};
+}
+function niceTicks(min,max,n=4){
+  const span=max-min||1, raw=span/n, mag=Math.pow(10,Math.floor(Math.log10(raw))), norm=raw/mag;
+  const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, lo=Math.floor(min/step)*step, hi=Math.ceil(max/step)*step, t=[];
+  for(let v=lo;v<=hi+step/2;v+=step) t.push(+v.toFixed(10));
+  return t;
+}
+function dataTable(cont,cols,rows,fmt){
+  cont.innerHTML=`<table><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>`<td>${i?fmt(c):esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+
+/* gráfico de líneas mensual: series = [{n, v:[..], c}] ; unit 'M' o '%' */
+function lineChart(cont,series,opt={}){
+  const W=cont.clientWidth||600, H=opt.h||240, ml=opt.ml||46, mr=opt.mr||16, mt=14, mb=28, pw=W-ml-mr, ph=H-mt-mb;
+  const all=series.flatMap(s=>s.v), ticks=niceTicks(Math.min(opt.zero?0:Math.min(...all),...all),Math.max(...all),4);
+  const y0=ticks[0], y1=ticks[ticks.length-1];
+  const x=i=>ml+i*pw/(N-1), y=v=>mt+ph-(v-y0)/(y1-y0)*ph;
+  const fmt=opt.unit==='%'?v=>fP(v,0):v=>nf1.format(v/1e6);
+  let g=`<g class="grid">${ticks.map(t=>`<line x1="${ml}" x2="${W-mr}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/>`).join('')}</g>`;
+  g+=ticks.map(t=>`<text x="${ml-6}" y="${(y(t)+4).toFixed(1)}" text-anchor="end">${fmt(t)}</text>`).join('');
+  if(y0<0&&y1>0) g+=`<g class="axis"><line x1="${ml}" x2="${W-mr}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"/></g>`;
+  g+=MC.map((m,i)=>`<text x="${x(i).toFixed(1)}" y="${H-8}" text-anchor="middle">${m}</text>`).join('');
+  // etiquetas finales: si dos quedan a menos de 13px se separan y se une cada una a su línea con una guía corta
+  const lab=series.map((s,si)=>({si,y:y(s.v[N-1]),ly:y(s.v[N-1])})).sort((a,b)=>a.y-b.y);
+  for(let k=1;k<lab.length;k++) if(lab[k].ly-lab[k-1].ly<13) lab[k].ly=lab[k-1].ly+13;
+  const mid=(lab.reduce((a,l)=>a+l.ly-l.y,0))/(lab.length||1); lab.forEach(l=>l.ly-=mid);
+  series.forEach((s,si)=>{
+    const d=s.v.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+    if(opt.area) g+=`<path d="${d} L${x(N-1).toFixed(1)} ${y(Math.max(y0,0)).toFixed(1)} L${x(0).toFixed(1)} ${y(Math.max(y0,0)).toFixed(1)} Z" style="fill:${s.c};opacity:.10"/>`;
+    g+=`<path d="${d}" style="fill:none;stroke:${s.c};stroke-width:2;stroke-linejoin:round;stroke-linecap:round"/>`;
+    g+=`<circle cx="${x(N-1).toFixed(1)}" cy="${y(s.v[N-1]).toFixed(1)}" r="4" style="fill:${s.c};stroke:var(--surface);stroke-width:2"/>`;
+    const lb=lab.find(l=>l.si===si);
+    if(opt.endLabels!==false){
+      if(Math.abs(lb.ly-lb.y)>1.5) g+=`<line x1="${(x(N-1)+5).toFixed(1)}" y1="${lb.y.toFixed(1)}" x2="${(x(N-1)+10).toFixed(1)}" y2="${lb.ly.toFixed(1)}" style="stroke:var(--hair-2)"/>`;
+      g+=`<text class="lbl lbl-strong" x="${(x(N-1)+12).toFixed(1)}" y="${(lb.ly+4).toFixed(1)}">${fmt(s.v[N-1])}</text>`;
+    }
+  });
+  g+=`<g id="cross" style="display:none"><line y1="${mt}" y2="${mt+ph}" style="stroke:var(--hair-2)"/>${series.map(s=>`<circle r="5" style="fill:${s.c};stroke:var(--surface);stroke-width:2"/>`).join('')}</g>`;
+  g+=`<rect class="hit" x="${ml}" y="${mt}" width="${pw}" height="${ph}"/>`;
+  cont.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(opt.aria||'')}">${g}</svg>`;
+  const svg=cont.firstChild, cross=svg.querySelector('#cross'), hit=svg.querySelector('.hit');
+  const on=ev=>{const r=svg.getBoundingClientRect(), px=(ev.clientX-r.left)*W/r.width, i=Math.max(0,Math.min(N-1,Math.round((px-ml)/pw*(N-1))));
+    cross.style.display='';cross.querySelector('line').setAttribute('x1',x(i));cross.querySelector('line').setAttribute('x2',x(i));
+    cross.querySelectorAll('circle').forEach((c,si)=>{c.setAttribute('cx',x(i));c.setAttribute('cy',y(series[si].v[i]));});
+    showTip(`<b>${MESES[i]} 2026</b><table>${series.map(s=>`<tr><td><i style="background:${s.c}"></i>${esc(s.n)}</td><td>${opt.unit==='%'?fP(s.v[i]):fM(s.v[i])}</td></tr>`).join('')}</table>`,ev);};
+  hit.addEventListener('mousemove',on);hit.addEventListener('mouseleave',()=>{cross.style.display='none';hideTip();});
+}
+
+/* columnas apiladas (o simples) mensuales */
+function columnChart(cont,series,opt={}){
+  const W=cont.clientWidth||600, H=opt.h||240, ml=46, mr=12, mt=18, mb=28, pw=W-ml-mr, ph=H-mt-mb;
+  const tot=MC.map((_,i)=>sum(series.map(s=>Math.max(0,s.v[i])))), neg=MC.map((_,i)=>sum(series.map(s=>Math.min(0,s.v[i]))));
+  const ticks=niceTicks(Math.min(0,...neg),Math.max(...tot),4), y0=ticks[0], y1=ticks[ticks.length-1];
+  const slot=pw/N, bw=Math.min(24,slot*0.6), x=i=>ml+slot*i+(slot-bw)/2, y=v=>mt+ph-(v-y0)/(y1-y0)*ph;
+  let g=`<g class="grid">${ticks.map(t=>`<line x1="${ml}" x2="${W-mr}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}"/>`).join('')}</g>`;
+  g+=ticks.map(t=>`<text x="${ml-6}" y="${(y(t)+4).toFixed(1)}" text-anchor="end">${nf1.format(t/1e6)}</text>`).join('');
+  g+=`<g class="axis"><line x1="${ml}" x2="${W-mr}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"/></g>`;
+  g+=MC.map((m,i)=>`<text x="${(x(i)+bw/2).toFixed(1)}" y="${H-8}" text-anchor="middle">${m}</text>`).join('');
+  const marks=[];
+  MC.forEach((_,i)=>{let accP=0,accN=0;
+    series.forEach((s,si)=>{const v=s.v[i]; if(!v) return; const base=v>0?accP:accN, top=base+v; if(v>0)accP=top; else accN=top;
+      const yTop=y(Math.max(base,top)), yBot=y(Math.min(base,top)), h=Math.max(0,yBot-yTop-(series.length>1?2:0)), last=si===series.length-1||!series.slice(si+1).some(t=>t.v[i]*v>0);
+      const r=last?4:0, yy=v>0?yTop:yTop+(series.length>1?2:0);
+      const path=v>0?`M${x(i)} ${yy+h} V${yy+r} a${r} ${r} 0 0 1 ${r} -${r} H${x(i)+bw-r} a${r} ${r} 0 0 1 ${r} ${r} V${yy+h} Z`
+                     :`M${x(i)} ${yy} V${yy+h-r} a${r} ${r} 0 0 0 ${r} ${r} H${x(i)+bw-r} a${r} ${r} 0 0 0 ${r} -${r} V${yy} Z`;
+      marks.push(`<path d="${path}" style="fill:${s.c}" data-i="${i}" data-s="${si}"/>`);});
+    if(opt.totalLabels&&(i===N-1||i===0)) g+=`<text class="lbl lbl-strong" x="${(x(i)+bw/2).toFixed(1)}" y="${(y(tot[i])-6).toFixed(1)}" text-anchor="middle">${nf1.format(tot[i]/1e6)}</text>`;
+  });
+  g+=marks.join('');
+  g+=MC.map((_,i)=>`<rect class="hit" x="${(ml+slot*i).toFixed(1)}" y="${mt}" width="${slot.toFixed(1)}" height="${ph}" data-i="${i}"/>`).join('');
+  cont.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(opt.aria||'')}">${g}</svg>`;
+  cont.querySelectorAll('.hit').forEach(r=>{r.addEventListener('mousemove',ev=>{const i=+r.dataset.i;showTip(`<b>${MESES[i]} 2026</b><table>${series.map(s=>`<tr><td><i style="background:${s.c}"></i>${esc(s.n)}</td><td>${fM(s.v[i])}</td></tr>`).join('')}${series.length>1?`<tr><td><b>Total</b></td><td><b>${fM(tot[i]+neg[i])}</b></td></tr>`:''}</table>`,ev);});r.addEventListener('mouseleave',hideTip);});
+}
+
+/* barras horizontales: items=[{n,v}] valor positivo, con etiqueta al final */
+function barChartH(cont,items,opt={}){
+  const W=cont.clientWidth||600, rowH=26, lw=Math.min(250,Math.max(120,W*0.42)), mr=64, H=items.length*rowH+8, pw=W-lw-mr;
+  const max=Math.max(...items.map(d=>Math.abs(d.v)))||1;
+  let g='';
+  items.forEach((d,i)=>{const yy=4+i*rowH, w=Math.max(2,Math.abs(d.v)/max*pw), name=d.n.length>36?d.n.slice(0,35)+'…':d.n;
+    g+=`<text class="lbl" x="${lw-8}" y="${yy+rowH/2+4}" text-anchor="end">${esc(name)}</text>`;
+    g+=`<path d="M${lw} ${yy+4} H${lw+w-4} a4 4 0 0 1 4 4 V${yy+rowH-8} a4 4 0 0 1 -4 4 H${lw} Z" style="fill:${d.c||'var(--s1)'}"/>`;
+    g+=`<text class="lbl lbl-strong" x="${lw+w+6}" y="${yy+rowH/2+4}">${opt.fmt?opt.fmt(d.v):nf1.format(Math.abs(d.v)/1e6)}</text>`;
+    g+=`<rect class="hit" x="0" y="${yy}" width="${W}" height="${rowH}" data-i="${i}"/>`;});
+  cont.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(opt.aria||'')}">${g}</svg>`;
+  cont.querySelectorAll('.hit').forEach(r=>{r.addEventListener('mousemove',ev=>{const d=items[+r.dataset.i];showTip(`<b>${esc(d.n)}</b><br>${fM(d.v)}${d.extra?`<br>${d.extra}`:''}`,ev);});r.addEventListener('mouseleave',hideTip);});
+}
+
+/* puente (waterfall horizontal): steps=[{n,v,total?}] */
+function waterfall(cont,steps,opt={}){
+  const W=cont.clientWidth||600, rowH=27, lw=Math.min(250,Math.max(130,W*0.42)), mr=70, pw=W-lw-mr, H=steps.length*rowH+8;
+  let run=0, lo=0, hi=0; const pos=steps.map(s=>{const a=s.total?0:run, b=s.total?s.v:run+s.v; run=s.total?s.v:run+s.v; lo=Math.min(lo,a,b); hi=Math.max(hi,a,b); return [a,b];});
+  const x=v=>lw+(v-lo)/(hi-lo||1)*pw;
+  let g=`<g class="axis"><line x1="${x(0)}" x2="${x(0)}" y1="0" y2="${H}"/></g>`;
+  steps.forEach((s,i)=>{const yy=4+i*rowH, [a,b]=pos[i], x0=Math.min(x(a),x(b)), w=Math.max(2,Math.abs(x(b)-x(a)));
+    const c=s.total?'var(--s1)':(s.v<0?'var(--de)':'var(--s3)');
+    g+=`<text class="lbl ${s.total?'lbl-strong':''}" x="${lw-8}" y="${yy+rowH/2+4}" text-anchor="end">${esc(s.n.length>38?s.n.slice(0,37)+'…':s.n)}</text>`;
+    g+=`<rect x="${x0.toFixed(1)}" y="${yy+4}" width="${w.toFixed(1)}" height="${rowH-8}" rx="4" style="fill:${c}"/>`;
+    const lx=x(b)>=x(a)?x(b)+6:x(a)+6;
+    g+=`<text class="lbl ${s.total?'lbl-strong':''}" x="${(Math.max(x0+w,x(a))+6).toFixed(1)}" y="${yy+rowH/2+4}">${s.total?'':(s.v<0?'−':'+')}${nf1.format(Math.abs(s.v)/1e6)}</text>`;
+    g+=`<rect class="hit" x="0" y="${yy}" width="${W}" height="${rowH}" data-i="${i}"/>`;});
+  cont.innerHTML=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(opt.aria||'')}">${g}</svg>`;
+  cont.querySelectorAll('.hit').forEach(r=>{r.addEventListener('mousemove',ev=>{const s=steps[+r.dataset.i];showTip(`<b>${esc(s.n)}</b><br>${fM(s.v)}${opt.base?`<br>${fP(s.v/opt.base)} de los ingresos por distribución y servicios`:''}`,ev);});r.addEventListener('mouseleave',hideTip);});
+}
+
+/* ---------- definición de gráficos ---------- */
+const defs={
+  puente:{scoped:true,make(el){
+    const ui=card(el,'Puente de resultados','De los ingresos por distribución y servicios a la utilidad neta. Millones de soles.',[['Subtotal','var(--s1)'],['Resta','var(--de)'],['Suma','var(--s3)']]);
+    const g=id=>val(L[id]);
+    const steps=[{n:'Ingresos por distribución y servicios',v:g('i_netos'),total:true},{n:'Costo de ventas y servicios (sin gas)',v:g('mb')-g('i_netos')},{n:'Margen bruto',v:g('mb'),total:true},{n:'Gastos operativos',v:g('g_op')},{n:'Provisiones (incobrables y legales)',v:g('g_inc')+g('g_cont')},{n:'EBITDA',v:g('ebitda'),total:true},{n:'Depreciación y amortización',v:g('da')},{n:'Resultado financiero neto',v:g('fin')},{n:'Diferencia en cambio y coberturas',v:g('dc')+g('cob')},{n:'Participación en subsidiaria',v:g('vpp')},{n:'Utilidad antes de impuestos',v:g('uai'),total:true},{n:'Impuesto a la renta',v:g('imp')},{n:'Utilidad neta',v:g('un'),total:true}];
+    waterfall(ui.chart,steps,{base:g('i_netos'),aria:'Puente de resultados '+scopeLabel()});
+    dataTable(ui.table,['Concepto',scopeLabel()+' (S/)','% ingresos'],steps.map(s=>[s.n,s.v,s.v/g('i_netos')]),(v)=>typeof v==='number'&&Math.abs(v)<5?fP(v):fS(v));
+  }},
+  ebitda:{make(el){
+    const ui=card(el,'EBITDA y utilidad neta por mes','Millones de soles. El EBITDA excluye depreciación, amortización, resultado financiero, diferencia en cambio e impuesto.',[['EBITDA','var(--s1)',1],['Utilidad neta','var(--s2)',1]]);
+    const s=[{n:'EBITDA',v:L.ebitda.valores,c:'var(--s1)'},{n:'Utilidad neta',v:L.un.valores,c:'var(--s2)'}];
+    lineChart(ui.chart,s,{zero:true,mr:44,aria:'EBITDA y utilidad neta mensual'});
+    dataTable(ui.table,['Mes',...s.map(x=>x.n+' (S/)')],MC.map((m,i)=>[MESES[i],...s.map(x=>x.v[i])]),fS);
+  }},
+  ingresos:{make(el){
+    const otros=MC.map((_,i)=>L.i_dcx.valores[i]+L.i_reub.valores[i]+L.i_merc.valores[i]+L.i_otros.valores[i]);
+    const s=[{n:'Distribución de gas',v:L.i_dist.valores,c:'var(--s1)'},{n:'Financiación a clientes',v:L.i_fin.valores,c:'var(--s2)'},{n:'Instalaciones y acometidas',v:L.i_inst.valores,c:'var(--s3)'},{n:'Ampliación de red (CINIIF 12)',v:L.i_amp.valores,c:'var(--s4)'},{n:'Otros (conexión, reubicaciones, mercaderías)',v:otros,c:'var(--s5)'}];
+    const ui=card(el,'Ingresos por línea de negocio','Millones de soles por mes, sin el pass-through de gas y transporte.',s.map(x=>[x.n,x.c]));
+    columnChart(ui.chart,s,{totalLabels:true,aria:'Ingresos mensuales por línea de negocio'});
+    dataTable(ui.table,['Mes',...s.map(x=>x.n+' (S/)'),'Total (S/)'],MC.map((m,i)=>[MESES[i],...s.map(x=>x.v[i]),sum(s.map(x=>x.v[i]))]),fS);
+  }},
+  margenes:{make(el){
+    const b=L.i_netos.valores, s=[{n:'Margen bruto',v:L.mb.valores.map((v,i)=>v/b[i]),c:'var(--s1)'},{n:'Margen EBITDA',v:L.ebitda.valores.map((v,i)=>v/b[i]),c:'var(--s2)'},{n:'Margen neto',v:L.un.valores.map((v,i)=>v/b[i]),c:'var(--s3)'}];
+    const ui=card(el,'Márgenes sobre ingresos por distribución y servicios','Porcentaje mensual. Base: ingresos sin el pass-through de gas y transporte.',s.map(x=>[x.n,x.c,1]));
+    lineChart(ui.chart,s,{unit:'%',zero:true,mr:44,aria:'Márgenes mensuales'});
+    dataTable(ui.table,['Mes',...s.map(x=>x.n)],MC.map((m,i)=>[MESES[i],...s.map(x=>x.v[i])]),v=>fP(v));
+  }},
+  opexfun:{make(el){
+    const f=id=>L.g_op.hijos.find(h=>h.id===id), s=[{n:'Administración',v:f('g_administración').valores.map(v=>-v),c:'var(--s1)'},{n:'Comercial',v:f('g_comercial').valores.map(v=>-v),c:'var(--s2)'},{n:'Operación y mantenimiento',v:f('g_operación_y_mantenimiento').valores.map(v=>-v),c:'var(--s3)'}];
+    const ui=card(el,'Gastos operativos por función','Millones de soles por mes, según el prefijo de la cuenta (51 administración, 52 comercial, 71 operación y mantenimiento).',s.map(x=>[x.n,x.c,1]));
+    lineChart(ui.chart,s,{zero:true,mr:40,aria:'Gastos operativos por función'});
+    dataTable(ui.table,['Mes',...s.map(x=>x.n+' (S/)')],MC.map((m,i)=>[MESES[i],...s.map(x=>x.v[i])]),fS);
+  }},
+  opexnat:{scoped:true,make(el){
+    const ui=card(el,'Gastos operativos por naturaleza','Clasificación por la descripción de la cuenta. Millones de soles, '+scopeLabel().toLowerCase()+'.');
+    const items=DATA.opex_naturaleza.map(o=>({n:o.nombre,v:-val(o)})).filter(o=>o.v>0).sort((a,b)=>b.v-a.v);
+    const tot=sum(items.map(i=>i.v)); items.forEach(i=>i.extra=fP(i.v/tot)+' del gasto operativo');
+    barChartH(ui.chart,items,{aria:'Gastos operativos por naturaleza'});
+    dataTable(ui.table,['Naturaleza',scopeLabel()+' (S/)','% del gasto'],items.map(i=>[i.n,i.v,i.v/tot]),v=>Math.abs(v)<5?fP(v):fS(v));
+  }},
+  incobrables:{make(el){
+    const v=L.g_inc.valores.map(x=>-x), d=L.i_dist.valores, r=v.map((x,i)=>x/d[i]);
+    const ui=card(el,'Provisión por incobrables (pérdida crediticia esperada)','Millones de soles por mes. En el tooltip, la provisión como porcentaje del ingreso por distribución.');
+    const s=[{n:'Provisión por incobrables',v,c:'var(--s1)'}];
+    columnChart(ui.chart,s,{totalLabels:true,aria:'Provisión mensual por incobrables'});
+    ui.chart.querySelectorAll('.hit').forEach(h=>{h.addEventListener('mousemove',ev=>{const i=+h.dataset.i;showTip(`<b>${MESES[i]} 2026</b><br>Provisión ${fM(v[i])}<br>${fP(r[i])} del ingreso por distribución`,ev);});});
+    dataTable(ui.table,['Mes','Provisión (S/)','Ingreso distribución (S/)','% del ingreso'],MC.map((m,i)=>[MESES[i],v[i],d[i],r[i]]),x=>Math.abs(x)<5?fP(x):fS(x));
+  }},
+  opextop:{scoped:true,make(el){
+    const ui=card(el,'Las 12 cuentas de gasto más relevantes','Millones de soles, '+scopeLabel().toLowerCase()+'. El tooltip indica función y naturaleza.');
+    const rep=DATA.opex_top.reduce((a,o)=>(a[o.nombre]=(a[o.nombre]||0)+1,a),{}), ab={'Administración':'Adm.','Comercial':'Com.','Operación y mantenimiento':'O&M'};
+    const items=DATA.opex_top.map(o=>({n:o.nombre+(rep[o.nombre]>1?' ('+(ab[o.funcion]||o.funcion)+')':''),v:-val(o),extra:esc(o.funcion)+' · '+esc(o.naturaleza)+' · cuenta '+o.cuenta})).filter(o=>o.v>0).sort((a,b)=>b.v-a.v).slice(0,12);
+    barChartH(ui.chart,items,{aria:'Principales cuentas de gasto operativo'});
+    dataTable(ui.table,['Cuenta',scopeLabel()+' (S/)'],items.map(i=>[i.n,i.v]),fS);
+  }},
+  da:{make(el){const ui=card(el,'Depreciación y amortización','Amortización de la concesión (CINIIF 12) y depreciación de PP&E.');const s=[{n:'D&A',v:L.da.valores.map(v=>-v),c:'var(--s1)'}];lineChart(ui.chart,s,{h:180,zero:true,area:true,mr:40,ml:40,aria:'Depreciación y amortización mensual'});dataTable(ui.table,['Mes','D&A (S/)'],MC.map((m,i)=>[MESES[i],s[0].v[i]]),fS);}},
+  fin:{make(el){const ui=card(el,'Resultado financiero neto','Intereses de deuda y bonos, netos de coberturas, valoración de derivados e intereses ganados.');const s=[{n:'Gasto financiero neto',v:L.fin.valores.map(v=>-v),c:'var(--s1)'}];lineChart(ui.chart,s,{h:180,zero:true,area:true,mr:40,ml:40,aria:'Resultado financiero mensual'});dataTable(ui.table,['Mes','Gasto financiero neto (S/)'],MC.map((m,i)=>[MESES[i],s[0].v[i]]),fS);}},
+  fx:{make(el){const ui=card(el,'Diferencia en cambio y coberturas','Resultado neto de tipo de cambio incluyendo coberturas. Positivo = ganancia.');const s=[{n:'Dif. en cambio + coberturas',v:MC.map((_,i)=>L.dc.valores[i]+L.cob.valores[i]),c:'var(--s1)'}];lineChart(ui.chart,s,{h:180,zero:true,area:true,mr:40,ml:40,aria:'Diferencia en cambio y coberturas mensual'});dataTable(ui.table,['Mes','Dif. cambio (S/)','Coberturas (S/)','Neto (S/)'],MC.map((m,i)=>[MESES[i],L.dc.valores[i],L.cob.valores[i],s[0].v[i]]),fS);}},
+  imp:{make(el){const ui=card(el,'Impuesto a la renta','Gasto corriente más diferido. Tasa nominal en Perú: 29,5 %.');const s=[{n:'Impuesto a la renta',v:L.imp.valores.map(v=>-v),c:'var(--s1)'}];lineChart(ui.chart,s,{h:180,zero:true,area:true,mr:40,ml:40,aria:'Impuesto a la renta mensual'});const c=L.imp.hijos;dataTable(ui.table,['Mes','Corriente (S/)','Diferido (S/)','Total (S/)','Tasa efectiva'],MC.map((m,i)=>[MESES[i],-c[0].valores[i],-c[1].valores[i],s[0].v[i],s[0].v[i]/L.uai.valores[i]]),v=>Math.abs(v)<5?fP(v):fS(v));}},
+};
+function renderCharts(onlyScoped){
+  document.querySelectorAll('[data-chart]').forEach(el=>{const d=defs[el.dataset.chart];if(!d||(onlyScoped&&!d.scoped))return;
+    const wasTable=el.querySelector('.tbl-view')&&!el.querySelector('.tbl-view').hidden; d.make(el);
+    if(wasTable){el.querySelector('.chart').hidden=true;el.querySelector('.tbl-view').hidden=false;el.querySelectorAll('.tog-view button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v==='t')));}});
+}
+
+/* ---------- hallazgos ---------- */
+function renderFindings(){
+  const y=id=>L[id].ytd, v=(id,i)=>L[id].valores[i], last=N-1;
+  const incR0=-v('g_inc',0)/v('i_dist',0), incR=-v('g_inc',last)/v('i_dist',last);
+  const opexG=v('g_op',last)/v('g_op',0)-1, distG=v('i_dist',last)/v('i_dist',0)-1, instG=v('i_inst',last)/v('i_inst',0)-1;
+  const etr=-y('imp')/y('uai'), finY=-y('fin'), cobrAcc=DATA.opex_top.find(o=>o.cuenta===5210053600);
+  const cobrPrev=cobrAcc?-sum(cobrAcc.valores.slice(0,last))/last:0, cobrLast=cobrAcc?-cobrAcc.valores[last]:0;
+  const F=[
+    {s:'crit',t:'Crítico',h:'La provisión por incobrables se triplicó en el año',
+     ev:`De <b>${fM(-v('g_inc',0))}</b> en enero a <b>${fM(-v('g_inc',last))}</b> en ${MESES[last].toLowerCase()} (${fP(incR0)} → <b>${fP(incR)}</b> del ingreso por distribución). Acumulado <b>${fM(-y('g_inc'))}</b>. En paralelo, el servicio de cobranza y facturación subió a <b>${fM(cobrLast)}</b> en agosto frente a un promedio de ${fM(cobrPrev)} en enero–julio.`,
+     n:'NIIF 9 §5.5 (pérdida crediticia esperada, matriz de provisión por antigüedad); NIIF 7 §35 (revelaciones de riesgo de crédito).',
+     a:['Revisar la matriz de pérdida esperada por segmento (residencial, comercial, financiación FNB) y validar que el aumento responde a deterioro real de la cartera y no a un cambio de parámetros.','Plan de recuperación: campañas de cobranza temprana, cortes por mora y refinanciamiento de la cartera FNB con mayor antigüedad.','Fijar meta: provisión mensual por debajo de 2,5 % del ingreso por distribución al cierre de 2026 (equivale a unos S/ 0,6 M por mes menos de gasto).'],
+     o:'Gerencia Comercial y Gerencia de Finanzas',p:'30 días'},
+    {s:'warn',t:'Atención',h:'Los gastos operativos crecen más rápido que los ingresos',
+     ev:`Gasto operativo de <b>${fM(-v('g_op',0))}</b> en enero a <b>${fM(-v('g_op',last))}</b> en ${MESES[last].toLowerCase()} (<b>${fP(opexG)}</b>), acumulado <b>${fM(-y('g_op'))}</b>. Los servicios de terceros concentran el aumento: cobranza y facturación (S/ 7,1 M), mantenimiento de redes (S/ 5,3 M), servicios informáticos (S/ 5,3 M), asesorías técnicas (S/ 3,8 M) y legales (S/ 2,6 M). Honorarios y asesorías suman S/ 9,2 M en el año.`,
+     n:'NIC 1 §99–105 (presentación de gastos por función y naturaleza); control presupuestal.',
+     a:['Renegociar el contrato de recaudación y facturación hacia una tarifa variable por factura cobrada, con incentivos por recuperación.','Presupuesto base cero para asesorías, honorarios y consultorías del segundo semestre; exigir entregables y aprobación por gerencia.','Programa de eficiencia de 5 % sobre el gasto operativo anualizado (cerca de S/ 5 M) con seguimiento mensual en este tablero.'],
+     o:'Gerencia de Administración y Finanzas; Compras',p:'45 días'},
+    {s:'warn',t:'Atención',h:'Multas, tributos asumidos y otros gastos no deducibles elevan la tasa efectiva',
+     ev:`Tasa efectiva de impuesto acumulada <b>${fP(etr)}</b> frente a la nominal de 29,5 %. Multas y sanciones S/ 0,36 M, impuestos asumidos de terceros S/ 0,38 M, donaciones S/ 0,13 M y gastos de ejercicios anteriores S/ 0,17 M en el año. El impuesto diferido explica <b>${fP(-L.imp.hijos[1].ytd/y('imp'),0)}</b> del gasto por impuesto.`,
+     n:'NIC 12 §81(c) (conciliación de la tasa efectiva); NIC 37 (provisiones por sanciones).',
+     a:['Mapa de sanciones regulatorias (Osinergmin, Sunafil, municipales) con causa raíz y responsable; meta de cero multas evitables.','Revisar contratos donde la empresa asume impuestos de terceros y renegociar la cláusula de gross-up.','Conciliar la tasa efectiva cada trimestre y sustentar las diferencias temporarias de la concesión (CINIIF 12) frente a la base tributaria.'],
+     o:'Legal y Regulatorio; Tributación',p:'60 días'},
+    {s:'warn',t:'Atención',h:'El costo financiero absorbe casi una quinta parte del EBITDA',
+     ev:`Gasto financiero neto acumulado <b>${fM(finY)}</b> (${fP(finY/y('ebitda'))} del EBITDA): intereses de créditos S/ 33,1 M y de bonos S/ 6,0 M, compensados en parte por ganancias en coberturas de S/ 11,3 M. La valoración de derivados cargó S/ 6,0 M a resultados, lo que sugiere derivados sin designación de cobertura o inefectividad.`,
+     n:'NIIF 9 cap. 6 (contabilidad de coberturas, documentación y prueba de efectividad); NIIF 7 §21A–24F.',
+     a:['Evaluar el refinanciamiento de los créditos con mayor tasa; el costo anualizado supera S/ 50 M.','Designar formalmente las coberturas de flujo de efectivo y documentar la relación económica para llevar la porción efectiva a ORI y reducir la volatilidad en resultados.','Informe mensual de tesorería con costo promedio de deuda, cobertura de intereses (EBITDA/intereses) y exposición en dólares.'],
+     o:'Tesorería; Contabilidad',p:'90 días'},
+    {s:'warn',t:'Atención',h:'Los ingresos por instalaciones internas caen y su margen es volátil',
+     ev:`Instalaciones y acometidas pasaron de <b>${fM(v('i_inst',0))}</b> en enero a <b>${fM(v('i_inst',last))}</b> en ${MESES[last].toLowerCase()} (<b>${fP(instG)}</b>). El margen mensual de la línea osciló entre ${fP((v('i_inst',2)+v('c_inst',2))/v('i_inst',2),0)} y ${fP((v('i_inst',last)+v('c_inst',last))/v('i_inst',last),0)} por el desfase entre el reconocimiento del ingreso y del costo.`,
+     n:'NIIF 15 §22–30 (obligaciones de desempeño), §35–38 (reconocimiento a lo largo del tiempo o en un momento).',
+     a:['Revisar el corte mensual de instalaciones: el costo debe reconocerse en el mismo periodo que el ingreso (obra terminada y facturada).','Analizar el pipeline de nuevas conexiones y la capacidad de instaladores; reforzar la oferta de financiamiento FNB para reactivar la demanda.'],
+     o:'Gerencia Comercial; Contabilidad',p:'60 días'},
+    {s:'good',t:'Favorable',h:'La distribución de gas, el negocio principal, crece con margen sólido',
+     ev:`Ingreso por distribución de <b>${fM(v('i_dist',0))}</b> en enero a <b>${fM(v('i_dist',last))}</b> en ${MESES[last].toLowerCase()} (<b>${fP(distG)}</b>), acumulado <b>${fM(y('i_dist'))}</b>, ${fP(y('i_dist')/y('i_netos'),0)} de los ingresos netos. El margen EBITDA acumulado es <b>${fP(y('ebitda')/y('i_netos'))}</b> y ${MESES[last].toLowerCase()} fue el mejor mes del año en utilidad neta (<b>${fM(v('un',last))}</b>). La contraprestación pagada a clientes bajó de S/ 0,53 M a S/ 0,16 M mensuales.`,
+     n:'NIIF 15 §70–72 (contraprestación pagadera al cliente); NIIF 15 §B34–B38 (principal frente a agente).',
+     a:['Mantener el seguimiento del volumen distribuido y de la tarifa vigente; anticipar el impacto de la próxima fijación tarifaria de Osinergmin.','Sostener el ritmo de nuevas conexiones: cada cliente incorporado eleva el ingreso regulado y la amortización de la concesión sube en proporción (S/ 0,3 M más en agosto).'],
+     o:'Gerencia General; Regulación',p:'Seguimiento mensual'},
+    {s:'info',t:'Proceso',h:'La diferencia en cambio se registra en bruto por montos extraordinarios',
+     ev:`Las ganancias brutas por diferencia en cambio suman <b>${fM(DATA.dif_cambio.ganancia_bruta_ytd)}</b> y las pérdidas <b>${fM(DATA.dif_cambio.perdida_bruta_ytd)}</b>, con un neto de solo ${fM(y('dc'))}. En junio las cuentas de proveedores movieron S/ 14,9 mil millones en cada sentido. El neto con coberturas es una ganancia de ${fM(y('dc')+y('cob'))}, lo que indica una cobertura económica eficaz.`,
+     n:'NIC 21 §28 (reconocimiento de diferencias en cambio); NIC 1 §35 (presentación neta de partidas similares).',
+     a:['Revisar la parametrización del ERP para la revaluación de saldos en moneda extranjera: los montos brutos sugieren revaluaciones repetidas o por transacción en lugar de por saldo.','Presentar la diferencia en cambio neta en el estado de resultados y documentar el control SOX sobre el proceso de revaluación mensual.'],
+     o:'Contabilidad; Sistemas',p:'30 días'},
+    {s:'info',t:'Información',h:'Faltan las cuentas de balance para completar el tablero',
+     ev:`El archivo de saldos solo incluye cuentas del estado de resultados (${DATA.calidad.cuentas_total} cuentas). Sin balance no se puede medir liquidez, apalancamiento, días de cobro ni capital de trabajo, que son los indicadores que explican el incobrable y el costo financiero.`,
+     n:'NIC 1 §54 (partidas mínimas del estado de situación financiera); NIC 7 (flujos de efectivo).',
+     a:['Incluir en el próximo envío los saldos mensuales de activo, pasivo y patrimonio con la misma homologación; el tablero ya tiene la estructura para agregarlos.','Añadir tres cuentas a la homologación (5510050850, 5510051450, 5510051460) y validar la fila duplicada de la cuenta 5115150600 (reclasificación de junio por S/ 1,5 M).'],
+     o:'Contabilidad; Control de gestión',p:'Antes del cierre de septiembre'},
+  ];
+  document.getElementById('findings').innerHTML=F.map(f=>`<article class="card finding ${f.s}"><div class="fh"><h3>${f.h}</h3><span class="chip ${f.s}">${f.t}</span></div><p class="ev">${f.ev}</p><p class="niif">${f.n}</p><ul>${f.a.map(a=>`<li>${a}</li>`).join('')}</ul><div class="meta"><span><b>Responsable</b> ${f.o}</span><span><b>Plazo</b> ${f.p}</span></div></article>`).join('');
+}
+
+/* ---------- notas ---------- */
+function renderNotas(){
+  const c=DATA.calidad, ok=c.control_utilidad_neta.suma_cuentas.every((s,i)=>Math.abs(s-c.control_utilidad_neta.utilidad_neta[i])<1);
+  document.getElementById('notas').innerHTML=`
+  <div class="card"><h3>Criterios NIIF aplicados en la lectura</h3><ul>
+    <li><b>Gas natural y transporte (pass-through).</b> El ingreso y el costo son idénticos cada mes (S/ ${nf1.format(L.i_gas.ytd/1e6)} M acumulados). La empresa actúa como principal (NIIF 15 §B35) y presenta el ingreso en bruto, pero sin margen; por eso los indicadores se calculan sobre los ingresos por distribución y servicios.</li>
+    <li><b>Ampliación de red.</b> Los servicios de construcción de la red concesionada se reconocen al costo (ingreso S/ ${nf1.format(L.i_amp.ytd/1e6)} M frente a costo S/ ${nf1.format(-L.c_amp.ytd/1e6)} M), coherente con el modelo del activo intangible de la CINIIF 12 §14; conviene documentar la conclusión sobre el margen de construcción a valor razonable.</li>
+    <li><b>Contraprestación a clientes.</b> Se registra como menor ingreso de distribución (NIIF 15 §70) y no como gasto; el tablero la mantiene dentro de la línea de distribución.</li>
+    <li><b>Intereses de financiación a clientes.</b> S/ ${nf1.format(L.i_fin.ytd/1e6)} M acumulados forman parte del margen bruto por ser actividad ordinaria (financiamiento no bancario). Bajo NIIF 15 §65 los ingresos por componente de financiación se presentan separados del ingreso por bienes y servicios.</li>
+    <li><b>Arrendamientos.</b> La cuenta “Arrendamiento Financiero NIIF 16 - CLM” tiene saldo acreedor (S/ ${nf1.format(1.05)} M) que compensa el gasto de la cuenta MM; verificar que corresponde a un subarriendo o refacturación y no a una reversión indebida.</li>
+    <li><b>Provisiones legales.</b> Reversión de S/ 0,79 M en marzo y cargo de S/ 0,56 M en agosto; revisar la estimación de la mejor salida (NIC 37 §36) con el área legal cada trimestre.</li>
+  </ul></div>
+  <div class="card"><h3>Calidad de la información</h3><ul>
+    <li><b>Cobertura.</b> ${c.filas_total} filas, ${c.cuentas_total} cuentas; ${c.meses_con_datos} meses con movimiento (setiembre a diciembre vienen en cero).</li>
+    <li><b>Control de integridad.</b> La suma de todas las cuentas coincide con la utilidad neta en cada mes: <span class="chip ${ok?'good':'crit'}">${ok?'Cuadra':'No cuadra'}</span></li>
+    <li><b>Sin homologar.</b> ${c.sin_homologar.map(s=>`${s.cuenta} (${esc(s.descripcion)})`).join('; ')}. Efecto acumulado S/ ${nf0.format(sum(c.sin_homologar.map(s=>s.ytd)))}; se muestran fuera de los rubros.</li>
+    <li><b>Cuenta duplicada.</b> ${c.duplicadas.length?`La cuenta ${c.duplicadas[0].cuenta} aparece en dos filas; la segunda reclasifica S/ ${nf1.format(Math.abs(c.duplicadas[1].ytd)/1e6)} M en junio hacia la cuenta 5215150600 (provisión comercial). El neto es cero.`:'Ninguna.'}</li>
+    <li><b>Alcance.</b> ${c.solo_resultados?'Solo cuentas de resultados; no hay estado de situación financiera ni flujo de efectivo.':'Incluye cuentas de balance.'}</li>
+    <li><b>Signo.</b> Los saldos contables traen ingresos en negativo; el tablero invierte el signo (importe gerencial) para que los subtotales sean sumas directas.</li>
+  </ul></div>`;
+}
+
+/* ---------- anexo ---------- */
+const rubroSel=document.getElementById('anexoRubro'), q=document.getElementById('anexoQ');
+[...new Set(DATA.cuentas.map(c=>c.r))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;rubroSel.appendChild(o);});
+rubroSel.insertAdjacentHTML('afterbegin','<option value="">Todos los rubros</option>');rubroSel.value='';
+function renderAnexo(){
+  const t=q.value.trim().toLowerCase(), r=rubroSel.value;
+  const rows=DATA.cuentas.filter(c=>(!r||c.r===r)&&(!t||String(c.c).includes(t)||c.d.toLowerCase().includes(t)||c.g.toLowerCase().includes(t)));
+  const tot=MC.map((_,i)=>sum(rows.map(c=>c.v[i]))), ty=sum(rows.map(c=>c.y));
+  document.getElementById('anexo').innerHTML=`<thead><tr><th>Cuenta</th><th>Descripción</th><th>Agrupación</th>${MC.map(m=>`<th>${m}</th>`).join('')}<th>Acumulado</th></tr></thead><tbody>${rows.slice(0,400).map(c=>`<tr><td>${c.c}</td><td>${esc(c.d)}</td><td>${esc(c.g)}</td>${c.v.map(v=>`<td>${v?fS(v).replace('S/ ',''):'–'}</td>`).join('')}<td>${fS(c.y).replace('S/ ','')}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3">${rows.length} cuentas${rows.length>400?' (se muestran 400)':''}</td>${tot.map(v=>`<td>${fS(v).replace('S/ ','')}</td>`).join('')}<td>${fS(ty).replace('S/ ','')}</td></tr></tfoot>`;
+}
+q.addEventListener('input',renderAnexo);rubroSel.addEventListener('change',renderAnexo);
+
+/* ---------- orquestación ---------- */
+function renderScoped(){syncFilters();renderKpis();renderEerr();renderCharts(true);}
+function renderAll(){syncFilters();renderKpis();renderEerr();renderCharts(false);renderFindings();renderNotas();renderAnexo();
+  document.getElementById('foot').innerHTML=`<span>Generado el ${DATA.meta.generado} a partir de Saldos_GNLC_2026-08.xlsx y Homologacion_EEFF_GNLC.xlsx.</span><span>Importes en soles; “M” = millones, “mil” = miles.</span><span>Los indicadores usan como base los ingresos por distribución y servicios (sin pass-through).</span>`;}
+renderAll();
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>renderCharts(false),150);});
+})();
+</script>
