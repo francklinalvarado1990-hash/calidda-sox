@@ -270,7 +270,7 @@ def construir(m: pd.DataFrame, meses: list[str]) -> dict:
 
     return {
         "meta": {"empresa": "Gas Natural de Lima y Callao S.A. (Cálidda)", "sigla": "GNLC", "anio": ANIO,
-                 "periodo": f"{meses[-1]} {ANIO}", "moneda": "S/", "meses": meses,
+                 "periodo": f"{meses[-1]} {ANIO}", "moneda": "US$", "meses": meses,
                  "meses_cortos": MES_CORTO[: len(meses)], "generado": date.today().isoformat()},
         "lineas": lineas,
         "opex_naturaleza": opex_nat,
@@ -342,7 +342,7 @@ def modelo_powerbi(m: pd.DataFrame, meses: list[str], datos: dict, destino: Path
     fechas["MesCorto"] = MES_CORTO
     fechas["Trimestre"] = ["T" + str((i // 3) + 1) for i in range(12)]
 
-    # EERR gerencial en miles de soles
+    # EERR gerencial en miles de dólares
     eerr = []
 
     def volcar(l: dict, nivel: int) -> None:
