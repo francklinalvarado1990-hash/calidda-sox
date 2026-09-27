@@ -36,6 +36,10 @@ def cargar() -> tuple[pd.DataFrame, list[str]]:
     s = pd.read_excel(SALDOS)
     s = s[["Cuenta", "Descripción"] + MESES].copy()
     s[MESES] = s[MESES].fillna(0.0)
+    dup = s[s["Cuenta"].duplicated(keep=False)]["Cuenta"].unique().tolist()
+    if dup:
+        print(f"Aviso: cuentas repetidas en el archivo de saldos, se consolidan sumando: {dup}")
+        s = s.groupby(["Cuenta", "Descripción"], as_index=False, sort=False)[MESES].sum()
     # meses con movimiento (se detiene en el último mes con algún saldo distinto de cero)
     con_mov = [m for m in MESES if (s[m].abs() > 0.005).any()]
     meses = MESES[: MESES.index(con_mov[-1]) + 1]

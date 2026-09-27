@@ -190,7 +190,7 @@ table.anexo{border-collapse:collapse;width:100%;font-size:12px;font-variant-nume
       <div>
         <div class="eyebrow">Gas Natural de Lima y Callao S.A. · Cálidda</div>
         <h1>Resultados gerenciales a agosto 2026</h1>
-        <div class="sub">Estado de resultados mensualizado enero–agosto 2026, en soles. Fuente: saldos contables homologados a la estructura de EEFF (316 cuentas).</div>
+        <div class="sub">Estado de resultados mensualizado enero–agosto 2026, en soles. Fuente: saldos contables homologados a la estructura de EEFF (318 cuentas).</div>
       </div>
       <div class="filters" role="group" aria-label="Periodo">
         <span class="flabel">Vista</span>
@@ -613,7 +613,7 @@ function renderFindings(){
     {s:'info',t:'Información',h:'Faltan las cuentas de balance para completar el tablero',
      ev:`El archivo de saldos solo incluye cuentas del estado de resultados (${DATA.calidad.cuentas_total} cuentas). Sin balance no se puede medir liquidez, apalancamiento, días de cobro ni capital de trabajo, que son los indicadores que explican el incobrable y el costo financiero.`,
      n:'NIC 1 §54 (partidas mínimas del estado de situación financiera); NIC 7 (flujos de efectivo).',
-     a:['Incluir en el próximo envío los saldos mensuales de activo, pasivo y patrimonio con la misma homologación; el tablero ya tiene la estructura para agregarlos.','Añadir tres cuentas a la homologación (5510050850, 5510051450, 5510051460) y validar la fila duplicada de la cuenta 5115150600 (reclasificación de junio por S/ 1,5 M).'],
+     a:['Incluir en el próximo envío los saldos mensuales de activo, pasivo y patrimonio con la misma homologación; el tablero ya tiene la estructura para agregarlos.','Mantener el archivo de saldos con una sola fila por cuenta: la reclasificación de junio entre 5115150600 y 5215150600 debe venir neteada dentro de cada cuenta.'],
      o:'Contabilidad; Control de gestión',p:'Antes del cierre de septiembre'},
   ];
   document.getElementById('findings').innerHTML=F.map(f=>`<article class="card finding ${f.s}"><div class="fh"><h3>${f.h}</h3><span class="chip ${f.s}">${f.t}</span></div><p class="ev">${f.ev}</p><p class="niif">${f.n}</p><ul>${f.a.map(a=>`<li>${a}</li>`).join('')}</ul><div class="meta"><span><b>Responsable</b> ${f.o}</span><span><b>Plazo</b> ${f.p}</span></div></article>`).join('');
@@ -634,8 +634,8 @@ function renderNotas(){
   <div class="card"><h3>Calidad de la información</h3><ul>
     <li><b>Cobertura.</b> ${c.filas_total} filas, ${c.cuentas_total} cuentas; ${c.meses_con_datos} meses con movimiento (setiembre a diciembre vienen en cero).</li>
     <li><b>Control de integridad.</b> La suma de todas las cuentas coincide con la utilidad neta en cada mes: <span class="chip ${ok?'good':'crit'}">${ok?'Cuadra':'No cuadra'}</span></li>
-    <li><b>Sin homologar.</b> ${c.sin_homologar.map(s=>`${s.cuenta} (${esc(s.descripcion)})`).join('; ')}. Efecto acumulado S/ ${nf0.format(sum(c.sin_homologar.map(s=>s.ytd)))}; se muestran fuera de los rubros.</li>
-    <li><b>Cuenta duplicada.</b> ${c.duplicadas.length?`La cuenta ${c.duplicadas[0].cuenta} aparece en dos filas; la segunda reclasifica S/ ${nf1.format(Math.abs(c.duplicadas[1].ytd)/1e6)} M en junio hacia la cuenta 5215150600 (provisión comercial). El neto es cero.`:'Ninguna.'}</li>
+    <li><b>Homologación.</b> ${c.sin_homologar.length?`Sin homologar: ${c.sin_homologar.map(s=>`${s.cuenta} (${esc(s.descripcion)})`).join('; ')}. Efecto acumulado S/ ${nf0.format(sum(c.sin_homologar.map(s=>s.ytd)))}; se muestran fuera de los rubros.`:'Todas las cuentas con saldo están homologadas. Las cuentas 5510050850 (Tributos IR) y 5510051450/5510051460 (Op. Cobertura OF e IR) se incorporaron con el mismo criterio que sus cuentas base: diferencia en cambio la primera y coberturas de tipo de cambio las otras dos.'}</li>
+    <li><b>Cuentas repetidas.</b> ${c.duplicadas.length?`La cuenta ${c.duplicadas[0].cuenta} aparece en dos filas; se consolidan sumando.`:'Ninguna. La cuenta 5115150600 venía en dos filas y se consolidó en una; en junio queda un abono de S/ 0,53 M porque la reclasificación de S/ 1,50 M hacia la cuenta comercial 5215150600 supera el cargo del mes. La provisión total no cambia.'}</li>
     <li><b>Alcance.</b> ${c.solo_resultados?'Solo cuentas de resultados; no hay estado de situación financiera ni flujo de efectivo.':'Incluye cuentas de balance.'}</li>
     <li><b>Signo.</b> Los saldos contables traen ingresos en negativo; el tablero invierte el signo (importe gerencial) para que los subtotales sean sumas directas.</li>
   </ul></div>`;
